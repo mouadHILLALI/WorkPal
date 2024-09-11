@@ -19,6 +19,10 @@ public class Visitor {
         this.password = password;
         this.role = role;
     }
+    public Visitor(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
 
     public int getId() {

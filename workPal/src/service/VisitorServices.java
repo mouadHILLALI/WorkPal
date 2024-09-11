@@ -1,20 +1,43 @@
 package service;
 
+
 import DAO.Visitor.VisitorDaoImpl;
+import entity.Member;
 import entity.Visitor;
+import repository.visitor.VisitorRepositoryImpl;
 
 public class VisitorServices {
-    public void signUpService(String email, String password , String username ) {
+    public boolean signUpService(Visitor visitor) {
         boolean flag = false;
         String role = "member";
-        Visitor visitor = new Visitor(username , email , password , role );
         VisitorDaoImpl visitorDao = new VisitorDaoImpl();
-        flag = visitorDao.getVisitor(email);
+        flag = visitorDao.getVisitor(visitor.getEmail());
         if (flag){
             System.out.print("email already exists please log in");
-            return;
+            return false;
         }else {
-            visitorDao.createVisitor(visitor);
+            VisitorRepositoryImpl visitorRepository = new VisitorRepositoryImpl();
+            visitorRepository.addVisitor(visitor);
+            return true;
         }
     }
+    public Visitor getVisitor(String email, String password) {
+        VisitorRepositoryImpl visitorRepository = new VisitorRepositoryImpl();
+        Visitor visitor = visitorRepository.logVisitor(email);
+
+        // Check if visitor is found
+        if (visitor == null) {
+            System.out.println("Visitor not found with the given email.");
+            return null;
+        }
+
+        // Check if the password matches
+        if (password.equals(visitor.getPassword())) {
+            return visitor;
+        } else {
+            System.out.println("Invalid password.");
+            return null;
+        }
+    }
+
 }

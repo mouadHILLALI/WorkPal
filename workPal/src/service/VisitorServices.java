@@ -53,4 +53,17 @@ public class VisitorServices {
             System.out.println("email not found.");
         }
     }
+    public void updatePassword(String email, String password) {
+        try {
+            VisitorRepositoryImpl visitorRepository = new VisitorRepositoryImpl();
+            boolean flag = visitorRepository.updatePassword(email, password);
+            if (flag){
+                System.out.println("Password updated successfully");
+            }else{
+                System.out.println("Password not updated");
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

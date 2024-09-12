@@ -42,6 +42,16 @@ public class VisitorRepositoryImpl implements VisitorRepository {
 
     @Override
     public Boolean updatePassword(String email, String password) {
-        return null;
+        try {
+            VisitorDaoImpl visitorDao = new VisitorDaoImpl();
+            boolean flag = visitorDao.resetPassword(email, password);
+            if (flag) {
+                return flag;
+            }else {
+                return false;
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

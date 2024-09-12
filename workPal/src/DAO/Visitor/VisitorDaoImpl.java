@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 
 public class VisitorDaoImpl implements VisitorDao {
     DatabaseConnection dbConnection = new DatabaseConnection();
@@ -33,6 +35,39 @@ public class VisitorDaoImpl implements VisitorDao {
         }
     }
 
+    @Override
+    public Boolean resetPassword(String email, String password) {
+        Connection connection = null;
+        try {
+            connection = dbConnection.getConnection();
+
+            // Correct SQL for updating the password
+            String sql = "UPDATE users SET password = ? WHERE email = ?";
+
+            // Prepare statement
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, password); // Set password first
+            preparedStatement.setString(2, email);    // Set email second
+
+            // Execute the update
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Check if any row was updated
+            return rowsUpdated > 0;
+
+        } catch (SQLException s) {
+            System.out.println(s.getMessage());
+            return false;
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     @Override
     public Visitor createVisitor(Visitor visitor) {
@@ -95,4 +130,29 @@ public class VisitorDaoImpl implements VisitorDao {
         }
     }
 
+    @Override
+    public Visitor get(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Visitor> getAll() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public void add(Visitor visitor) {
+
+    }
+
+    @Override
+   public boolean update(){
+        return false;
+    }
+
+
+    @Override
+    public void delete(Visitor visitor) {
+
+    }
 }

@@ -25,4 +25,23 @@ public class VisitorRepositoryImpl implements VisitorRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public Boolean resetPassword(String email , String password) {
+        try {
+            VisitorDaoImpl visitorDao = new VisitorDaoImpl();
+            boolean flag = visitorDao.resetPassword(email, password);
+            if (flag) {
+                return flag;
+            }else {
+                return false;
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Boolean updatePassword(String email, String password) {
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package service;
 
 
 import DAO.Visitor.VisitorDaoImpl;
+import configuration.EmailSender;
 import entity.Member;
 import entity.Visitor;
 import repository.visitor.VisitorRepositoryImpl;
@@ -39,5 +40,17 @@ public class VisitorServices {
             return null;
         }
     }
-
+    public void resetPassword(String email) {
+        VisitorDaoImpl visitorDao = new VisitorDaoImpl();
+        boolean flag = visitorDao.getVisitor(email);
+        if (flag) {
+            String pass = "testpassword";
+            VisitorRepositoryImpl visitorRepository = new VisitorRepositoryImpl();
+            visitorRepository.resetPassword(email, pass);
+            String content = "Hello , please use this password temporarily" + pass ;
+            EmailSender.sendEmail(email , "WorkPal Password reset" , content );
+        }else {
+            System.out.println("email not found.");
+        }
+    }
 }

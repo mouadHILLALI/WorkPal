@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class MenuController {
     public void mainMenu(){
-        System.out.println("Welcome to the Workpal\n1.Sign up\n2.Sign in\n0.Exit");
+        System.out.println("Welcome to the Workpal\n1.Sign up\n2.Sign in\n3.reset Password\n0.Exit");
         Scanner scanner = new Scanner(System.in);
         int userChoice = -1;
         do {
@@ -19,6 +19,9 @@ public class MenuController {
                         break;
                     case 2:
                         signIn();
+                        break;
+                    case 3:
+                      resetPassword();
                         break;
                     case 0:
                         System.out.println("Exiting. Goodbye!");
@@ -105,7 +108,6 @@ public class MenuController {
         while (true) {
             System.out.print("Enter email: ");
             email = scanner.nextLine().trim();
-
             // Validate email input
             if (email.isEmpty()) {
                 System.out.println("Email cannot be empty. Please try again.");
@@ -137,6 +139,16 @@ public class MenuController {
             }
         }
     }
-
+    public void resetPassword(){
+        try {
+            System.out.println("Enter your email");
+            Scanner scanner = new Scanner(System.in);
+            String email = scanner.nextLine().trim();
+            VisitorServices visitorServices = new VisitorServices();
+            visitorServices.resetPassword(email);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -2,8 +2,8 @@ package service;
 
 
 import DAO.Visitor.VisitorDaoImpl;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import configuration.EmailSender;
-import entity.Member;
 import entity.Visitor;
 import repository.visitor.VisitorRepositoryImpl;
 
@@ -63,6 +63,42 @@ public class VisitorServices {
                 System.out.println("Password not updated");
             }
         } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public Boolean updateAddress(String email, String address) {
+        try {
+            if (email == null || address == null) {
+                return false;
+            }
+            VisitorRepositoryImpl visitorRepository = new VisitorRepositoryImpl();
+            Boolean flag = visitorRepository.updateAddress(email, address);
+            if (flag){
+                return flag;
+            }else {
+                return false;
+
+            }
+        }
+        catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public Boolean updatePhone(String email, String phone) {
+        try {
+            if (email == null || phone == null) {
+                return false;
+            }
+            VisitorRepositoryImpl visitorRepository = new VisitorRepositoryImpl();
+            Boolean flag = visitorRepository.updatePhone(email, phone);
+            if (flag){
+                return flag;
+            }else {
+                return false;
+
+            }
+        }
+        catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }

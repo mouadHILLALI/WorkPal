@@ -3,6 +3,7 @@ package DAO.Visitor;
 import configuration.DatabaseConnection;
 import entity.Visitor;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -130,6 +131,43 @@ public class VisitorDaoImpl implements VisitorDao {
         }
     }
 
+    public Boolean updateAddress(String email, String address) {
+        try {
+            connection = dbConnection.getConnection();
+            String sql = "UPDATE users SET address = ? WHERE email = ?";
+            PreparedStatement prpstmt = connection.prepareStatement(sql);
+            prpstmt.setString(1, address);
+            prpstmt.setString(2, email);
+            int rowsAffected = prpstmt.executeUpdate();
+            return rowsAffected > 0; // return true if rows were updated, otherwise false
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // return false in case of an exception
+        }
+    }
+    @Override
+    public Boolean updatePhone(String email, String phone) {
+        try {
+            connection = dbConnection.getConnection();
+
+            // Convert phone to long (BigInt)
+            long phoneNumber = Long.parseLong(phone);
+
+            String sql = "UPDATE users SET phone_number = ? WHERE email = ?";
+            PreparedStatement prpstmt = connection.prepareStatement(sql);
+            prpstmt.setLong(1, phoneNumber); // Set the bigint phone number
+            prpstmt.setString(2, email);
+
+            int rowsAffected = prpstmt.executeUpdate();
+            return rowsAffected > 0; // return true if rows were updated, otherwise false
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid phone number format.");
+            return false; // return false in case of invalid input
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // return false in case of an exception
+        }
+    }
 
     @Override
     public Visitor get(int id) {

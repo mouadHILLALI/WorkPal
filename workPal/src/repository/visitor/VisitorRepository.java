@@ -7,4 +7,6 @@ public interface VisitorRepository {
     abstract public Visitor logVisitor(String email);
     abstract public Boolean resetPassword(String email , String password);
     abstract public Boolean updatePassword(String email , String password);
+    abstract public Boolean updateAddress(String email , String address);
+    abstract public Boolean updatePhone(String email , String phone);
 }

@@ -39,7 +39,6 @@ public class MenuController {
 
     public void signUp() {
         Scanner scanner = new Scanner(System.in);
-
         String username = "";
         String password = "";
         String email = "";
@@ -92,6 +91,7 @@ public class MenuController {
            if (flag) {
                System.out.println("Sign up successful.");
                MemberController memberController = new MemberController();
+
                memberController.memberMenu(visitor);
            }else {
                System.out.println("Sign up failed.");
@@ -106,15 +106,17 @@ public class MenuController {
         String password = "";
 
         while (true) {
+            // Prompt for email
             System.out.print("Enter email: ");
             email = scanner.nextLine().trim();
+
             // Validate email input
             if (email.isEmpty()) {
                 System.out.println("Email cannot be empty. Please try again.");
             } else if (email.length() < 3) {
                 System.out.println("Email must be at least 3 characters long. Please try again.");
             } else {
-                // Ask for password
+                // Prompt for password
                 System.out.print("Enter password: ");
                 password = scanner.nextLine().trim();
 
@@ -127,13 +129,25 @@ public class MenuController {
                 // Authenticate user
                 VisitorServices visitorServices = new VisitorServices();
                 Visitor visitor = visitorServices.getVisitor(email, password);
-
-                // Check if visitor exists and role is "member"
-                if (visitor != null && visitor.getRole().equals("member")) {
-                    MemberController memberController = new MemberController();
-                    memberController.memberMenu(visitor);
-                } else {
+                // Check if visitor is null (user not found)
+                if (visitor == null) {
                     System.out.println("Invalid email or password. Please try again.");
+                    continue; // Go back to asking for email and password
+                }
+
+                // Role-based navigation
+                switch (visitor.getRole()) {
+                    case "member":
+                        MemberController memberController = new MemberController();
+                        memberController.memberMenu(visitor);
+                        break;
+                    case "admin":
+                        AdminController adminController = new AdminController();
+                        adminController.adminMenu(visitor);
+                        break;
+                    default:
+                        System.out.println("Unknown role. Access denied.");
+                        break;
                 }
                 break;
             }

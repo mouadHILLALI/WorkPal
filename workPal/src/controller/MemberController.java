@@ -32,7 +32,6 @@ public class MemberController {
             throw new RuntimeException(e);
         }
     }
-
     public void manageProfile(Visitor visitor) {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -164,5 +163,4 @@ public class MemberController {
             throw new RuntimeException(e);
         }
     }
-
 }

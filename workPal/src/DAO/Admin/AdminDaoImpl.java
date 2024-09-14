@@ -2,8 +2,14 @@ package DAO.Admin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import configuration.DatabaseConnection;
+import entity.Member;
 
 public class AdminDaoImpl implements AdminDao {
 
@@ -29,5 +35,51 @@ public class AdminDaoImpl implements AdminDao {
             e.printStackTrace();
             return false; // Return false in case of an error
         }
+    }
+
+    @Override
+    public Object get(int id) {
+        return null;
+    }
+
+    @Override
+    public Map<Integer, Member> getAll() {
+        Map<Integer, Member> userMap = new HashMap<>();
+        try {
+            DatabaseConnection dbConnection = new DatabaseConnection();
+            Connection connection = dbConnection.getConnection();
+            String sql = "SELECT id, username, email, role FROM users WHERE role <> 'admin'";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String username = resultSet.getString("username");
+                String email = resultSet.getString("email");
+                String role = resultSet.getString("role");
+
+                Member user = new Member(id, username, email, role);  // Create a User object
+                userMap.put(id, user);  // Add to the map
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return Collections.emptyMap();
+    }
+
+
+    @Override
+    public void add(Object o) {
+
+    }
+
+    @Override
+    public boolean update() {
+        return false;
+    }
+
+    @Override
+    public void delete(Object o) {
+
     }
 }

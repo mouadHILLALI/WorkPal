@@ -3,13 +3,12 @@ package DAO.Visitor;
 import configuration.DatabaseConnection;
 import entity.Visitor;
 
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 
 public class VisitorDaoImpl implements VisitorDao {
     DatabaseConnection dbConnection = new DatabaseConnection();
@@ -175,8 +174,8 @@ public class VisitorDaoImpl implements VisitorDao {
     }
 
     @Override
-    public List<Visitor> getAll() {
-        return Collections.emptyList();
+    public Map<Visitor, Visitor> getAll() {
+        return Collections.EMPTY_MAP;
     }
 
     @Override

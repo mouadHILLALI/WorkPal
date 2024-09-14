@@ -48,17 +48,12 @@ public class AdminDaoImpl implements AdminDao {
         try {
             DatabaseConnection dbConnection = new DatabaseConnection();
             Connection connection = dbConnection.getConnection();
-            String sql = "SELECT id, username, email, role FROM users WHERE role <> 'admin'";
+            String sql = "SELECT * FROM users WHERE role <> 'admin'";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String username = resultSet.getString("username");
-                String email = resultSet.getString("email");
-                String role = resultSet.getString("role");
-
-                Member user = new Member(id, username, email, role);  // Create a User object
+                Member user = new Member();  // Create a User object
                 userMap.put(id, user);  // Add to the map
             }
         }catch (SQLException e){

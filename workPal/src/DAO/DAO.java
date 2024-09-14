@@ -1,11 +1,11 @@
 package DAO;
-
-import java.util.Map;
-
+import entity.Member;
+import java.util.LinkedList;
 public interface DAO<T> {
     T get(int id);
-    Map< T,T> getAll();
+    LinkedList<Member> getAll();
+    Member getMember(int id);
     void add(T t);
     boolean update();
-    void delete(T t);
+    Boolean delete( int t);
 }

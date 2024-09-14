@@ -13,6 +13,12 @@ public class Member {
         this.role = "member";
     }
 
+    public Member() {
+
+    }
+    public String toString() {
+        return "Member{id=" + id + ", username='" + username + "', email='" + email + "'}";
+    }
     public int getId() {
         return id;
     }

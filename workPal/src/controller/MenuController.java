@@ -145,6 +145,9 @@ public class MenuController {
                         AdminController adminController = new AdminController();
                         adminController.adminMenu(visitor);
                         break;
+                    case "manager":
+                        ManagerController.managerMenu(visitor);
+                        break;
                     default:
                         System.out.println("Unknown role. Access denied.");
                         break;

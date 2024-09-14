@@ -1,6 +1,7 @@
 package DAO.Visitor;
 
 import configuration.DatabaseConnection;
+import entity.Member;
 import entity.Visitor;
 
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class VisitorDaoImpl implements VisitorDao {
@@ -167,15 +169,18 @@ public class VisitorDaoImpl implements VisitorDao {
             return false; // return false in case of an exception
         }
     }
-
+    public Member getMember(int id) {
+        return null;
+    }
     @Override
     public Visitor get(int id) {
         return null;
     }
 
     @Override
-    public Map<Visitor, Visitor> getAll() {
-        return Collections.EMPTY_MAP;
+    public LinkedList  getAll() {
+        LinkedList LinkedList = null;
+        return LinkedList ;
     }
 
     @Override
@@ -190,7 +195,7 @@ public class VisitorDaoImpl implements VisitorDao {
 
 
     @Override
-    public void delete(Visitor visitor) {
-
+    public Boolean delete(int id) {
+    return false;
     }
 }
